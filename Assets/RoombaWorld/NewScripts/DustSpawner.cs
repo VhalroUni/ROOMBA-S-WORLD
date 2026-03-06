@@ -1,0 +1,71 @@
+using Pathfinding;
+using UnityEngine;
+
+public class DustSpawner : MonoBehaviour
+{
+    [Header("Timing")]
+    public float spawnEverySeconds = 5f;
+
+    [Header("Spawn bounds (world units)")]
+    public Vector2 minBounds = new Vector2(-20, -10);
+    public Vector2 maxBounds = new Vector2(20, 10);
+
+    [Header("Sampling")]
+    public int maxAttempts = 40;
+
+    private GameObject dustPrefab;
+    private float timer;
+
+    void Start()
+    {
+        dustPrefab = Resources.Load<GameObject>("DUST");
+        timer = spawnEverySeconds;
+    }
+
+    void Update()
+    {
+        timer -= Time.deltaTime;
+        if (timer > 0f) return;
+        timer = spawnEverySeconds;
+
+        if (!TryGetRandomWalkablePosition(out Vector3 pos)) return;
+
+        GameObject dust = Instantiate(dustPrefab, pos, Quaternion.identity);
+
+        // Color aleatori (SpriteRenderer al root o a un fill)
+        var sr = dust.GetComponent<SpriteRenderer>();
+        if (sr == null) sr = dust.GetComponentInChildren<SpriteRenderer>();
+        if (sr != null) sr.color = Random.ColorHSV();
+    }
+
+    private bool TryGetRandomWalkablePosition(out Vector3 position)
+    {
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            float x = Random.Range(minBounds.x, maxBounds.x);
+            float y = Random.Range(minBounds.y, maxBounds.y);
+            Vector3 p = new Vector3(x, y, 0f);
+
+            if (Walkable(p))
+            {
+                position = p;
+                return true;
+            }
+        }
+
+        position = default;
+        return false;
+    }
+
+    private static bool Walkable(Vector3 position)
+    {
+        var active = AstarPath.active;
+        if (active == null || active.data == null) return false;
+
+        GridGraph gg = active.data.gridGraph;
+        if (gg == null) return false;
+
+        NNInfoInternal nn = gg.GetNearest(position);
+        return nn.node != null && nn.node.Walkable;
+    }
+}

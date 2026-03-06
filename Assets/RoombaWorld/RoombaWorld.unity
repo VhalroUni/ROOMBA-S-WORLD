@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823459bfcabf59e4bbb7d30c1033e0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 0}
+  fsm: {fileID: 11400000, guid: 6613e840b2bf3854ba5112530a2dbf90, type: 2}
   currentState: 
   textMesh: {fileID: 0}
 --- !u!114 &111757796
@@ -2997,6 +2997,8 @@ GameObject:
   m_Component:
   - component: {fileID: 458160356}
   - component: {fileID: 458160357}
+  - component: {fileID: 458160359}
+  - component: {fileID: 458160358}
   m_Layer: 0
   m_Name: SPAWNERS
   m_TagString: Untagged
@@ -3031,6 +3033,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 500e121cde0e897408c128f72fd46aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &458160358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458160352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f88e1ea2d1f2eb4caad2acc05e46d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MouseSpawner
+  baseSeconds: 30
+  plusMinusSeconds: 20
+  entryExitRoot: {fileID: 0}
+--- !u!114 &458160359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458160352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a826c0df7bec68645b960351a43098f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DustSpawner
+  spawnEverySeconds: 5
+  minBounds: {x: -20, y: -10}
+  maxBounds: {x: 20, y: 10}
+  maxAttempts: 40
 --- !u!1 &466963654
 GameObject:
   m_ObjectHideFlags: 0

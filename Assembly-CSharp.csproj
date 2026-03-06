@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\AICourse\Utilities\Foldout\FoldoutAttribute.cs" />
+    <Compile Include="Assets\RoombaWorld\NewScripts\DustSpawner.cs" />
     <Compile Include="Assets\AICourse\Steerings\Flocking.cs" />
     <Compile Include="Assets\AICourse\Steerings\PathFollowing.cs" />
     <Compile Include="Assets\AICourse\Utilities\Spiral.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets\AICourse\Utilities\DynamicBlackboard.cs" />
     <Compile Include="Assets\AICourse\FSMs\FiniteStateMachine.cs" />
     <Compile Include="Assets\AICourse\Steerings\Align.cs" />
+    <Compile Include="Assets\RoombaWorld\NewScripts\FSM_Roomba_Basic.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\INode.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_Drop.cs" />
     <Compile Include="Assets\RoombaWorld\OtherScripts\GoToTarget.cs" />
@@ -158,10 +160,12 @@
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_FindInstanceWithinRadius.cs" />
     <Compile Include="Assets\RoombaWorld\OtherScripts\StartStopController.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\Sequence.cs" />
+    <Compile Include="Assets\RoombaWorld\NewScripts\MouseSpawner.cs" />
     <Compile Include="Assets\AICourse\Steerings\SteeringBehaviour.cs" />
     <Compile Include="Assets\AICourse\Utilities\ToggleTrail.cs" />
     <Compile Include="Assets\AICourse\Utilities\SceneControl.cs" />
     <Compile Include="Assets\AICourse\Steerings\LinearRepulsion.cs" />
+    <Compile Include="Assets\RoombaWorld\NewScripts\FSM_Mouse_Basic.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\InternalNode.cs" />
     <Compile Include="Assets\RoombaWorld\OtherScripts\ClickSpawn.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\LambaAction.cs" />
