@@ -680,7 +680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ROOMBA_Blackboard
   dustDetectionRadius: 60
   pooDetectionRadius: 150
-  chargingStationDetectionRadius: 100
+  chargingStationDetectionRadius: 200
   patrolPointDetectionRadius: 7
   dustReachedRadius: 7
   pooReachedRadius: 7
@@ -691,7 +691,7 @@ MonoBehaviour:
   energyRechargePerSecond: 15
   minCharge: 15
   maxCharge: 99
-  currentCharge: 100
+  currentCharge: 17
   baseMaxSpeed: 2
   baseMaxAccel: 4
 --- !u!114 &111757792
@@ -775,7 +775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823459bfcabf59e4bbb7d30c1033e0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 11400000, guid: ec65acb8e8285ea4bb15575fcadcad38, type: 2}
+  fsm: {fileID: 11400000, guid: c838b876bd4a0374a9dfcead89b68807, type: 2}
   currentState: 
   textMesh: {fileID: 0}
 --- !u!114 &111757796
