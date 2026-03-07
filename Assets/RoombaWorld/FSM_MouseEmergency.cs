@@ -2,33 +2,25 @@ using FSMs;
 using UnityEngine;
 using Steerings;
 
-[CreateAssetMenu(fileName = "FSM_Mouse", menuName = "Finite State Machines/FSM_Mouse", order = 1)]
-public class FSM_Mouse : FiniteStateMachine
+[CreateAssetMenu(fileName = "FSM_MouseEmergency", menuName = "Finite State Machines/FSM_MouseEmergency", order = 1)]
+public class FSM_MouseEmergency : FiniteStateMachine
 {
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
-    public GameObject mouse;
-    private GoToTarget goToTarget;
     private SteeringContext steeringContext;
     private MOUSE_Blackboard blackboard;
-
-    private GameObject roomba;
-    private GameObject currentPatrolPoint;
     private GameObject currentExit;
-
-    private GameObject tempTarget;
-
+    private SpriteRenderer mouse;
 
     public override void OnEnter()
     {
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
          * It's equivalent to the on enter action of any state 
          * Usually this code includes .GetComponent<...> invocations */
-        mouse = GetComponent<GameObject>();
-        goToTarget = GetComponent<GoToTarget>();
         steeringContext = GetComponent<SteeringContext>();
         blackboard = GetComponent<MOUSE_Blackboard>();
+        mouse = GetComponent<SpriteRenderer>();
         base.OnEnter(); // do not remove
     }
 
@@ -43,28 +35,20 @@ public class FSM_Mouse : FiniteStateMachine
 
     public override void OnConstruction()
     {
-        /* STAGE 1: create the states with their logic(s)
-         *-----------------------------------------------
-         */
+        //STAGE 1: create the states with their logic(s)
+         FiniteStateMachine DEFAULT = ScriptableObject.CreateInstance<FSM_Mouse>();
+         DEFAULT.Name = "DEFAULT";
 
-        State goRandom = new State("Mouse go random walkable location",
-            () => { currentPatrolPoint = LocationHelper.RandomPatrolPoint(); goToTarget.target = currentPatrolPoint; }, // write on enter logic inside {}
+        State scared = new State("Mouse get scared",
+            () => { 
+                mouse.color = Color.green;
+                steeringContext.maxSpeed = blackboard.baseMaxSpeed * 2f;
+                steeringContext.maxSpeed = blackboard.baseMaxSpeed * 4f;
+                currentExit = LocationHelper.NearestExitPoint(gameObject);
+            }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
-            () => { goToTarget.target = null; }  // write on exit logic inisde {}  
+            () => { mouse.color = Color.white; }  // write on exit logic inisde {}  
         );
-
-        State doPoo = new State("Mouse do poo",
-           () => { Instantiate(blackboard.pooPrefab, gameObject.transform); }, // write on enter logic inside {}
-           () => { }, // write in state logic inside {}
-           () => { }  // write on exit logic inisde {}  
-       );
-
-        State entryAndExit = new State("Mouse exit the scene",
-           () => { currentExit = LocationHelper.RandomEntryExitPoint(); }, // write on enter logic inside {}
-           () => { }, // write in state logic inside {}
-           () => { Object.Destroy(gameObject); }  // write on exit logic inisde {}  
-       );
-
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------
@@ -79,20 +63,16 @@ public class FSM_Mouse : FiniteStateMachine
 
         /* STAGE 3: add states and transitions to the FSM 
          * ----------------------------------------------
-                 */
-
-        AddStates(goRandom, doPoo, entryAndExit);
+         */
+        AddStates(DEFAULT, scared);
 
         //AddTransition(sourceState, transition, destinationState);
 
 
 
+
         /* STAGE 4: set the initial state
-         */
-        initialState = goRandom;
-
-
-
-
+        */
+        initialState = DEFAULT;
     }
 }

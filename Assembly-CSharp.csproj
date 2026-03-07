@@ -90,6 +90,7 @@
     <Compile Include="Assets\RoombaWorld\OtherScripts\GoToTarget.cs" />
     <Compile Include="Assets\AICourse\Steerings\WanderPlusAvoid.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\Condition.cs" />
+    <Compile Include="Assets\RoombaWorld\FSM_MouseEmergency.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_DebugLog.cs" />
     <Compile Include="Assets\AICourse\Steerings\WanderAroundPlusAvoid.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\DynamicSelector.cs" />
