@@ -49,9 +49,10 @@ public class FSM_CleanDust : FiniteStateMachine
         State goToCleanDust = new State("Go To Dust",
             () => { 
                 ResetSpeed();
-                goToTarget.target = targetDust;
             }, // write on enter logic inside {}
             () => {
+
+                goToTarget.target = targetDust;
                 float distanceToFirstTarget = SensingUtils.DistanceToTarget(gameObject, targetDust);
                 otherDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);
                 float distanceToOtherTarget = SensingUtils.DistanceToTarget(gameObject, otherDust);
