@@ -12,7 +12,9 @@ public class FSM_CleanDust : FiniteStateMachine
     ROOMBA_Blackboard blackboard;
     GoToTarget goToTarget;
     SteeringContext steeringContext;
-    private GameObject currentDust;
+
+    private GameObject targetDust;
+    private GameObject otherDust;
 
     public override void OnEnter()
     {
@@ -47,35 +49,37 @@ public class FSM_CleanDust : FiniteStateMachine
         State goToCleanDust = new State("Go To Dust",
             () => { 
                 ResetSpeed();
-                goToTarget.target = currentDust;
+                goToTarget.target = targetDust;
             }, // write on enter logic inside {}
             () => {
-                float distance = SensingUtils.DistanceToTarget(gameObject, currentDust);
-                Debug.Log("Distance to dust: " + distance);
+                float distanceToFirstTarget = SensingUtils.DistanceToTarget(gameObject, targetDust);
+                otherDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);
+                float distanceToOtherTarget = SensingUtils.DistanceToTarget(gameObject, otherDust);
+                if (distanceToFirstTarget > distanceToOtherTarget) targetDust = otherDust;
+
             }, // write in state logic inside {}
-            () => { GameObject.Destroy(currentDust); }  // write on exit logic inisde {}
+            () => { GameObject.Destroy(targetDust); }  // write on exit logic inisde {}
         );
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------*/
 
-        Transition dustDetected = new Transition("Roomba detected dust",
-            () => { return currentDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius); }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
-        );
-
         Transition dustReached = new Transition("Roomba reached the dust",
-            () => { return SensingUtils.DistanceToTarget(gameObject, currentDust) <= blackboard.dustReachedRadius; }, // write the condition checkeing code in {}
+            () => { return SensingUtils.DistanceToTarget(gameObject, targetDust) <= blackboard.dustReachedRadius; }, // write the condition checkeing code in {}
             () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
         );
 
+        Transition newDustDetected = new Transition("Roomba detected another dust near than the other",
+            () => { return targetDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);}, // write the condition checkeing code in {}
+            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+        );
 
         /* STAGE 3: add states and transitions to the FSM 
          * ----------------------------------------------*/
 
         AddStates(PATROL, goToCleanDust);
 
-        AddTransition(PATROL, dustDetected, goToCleanDust);
+        AddTransition(PATROL, newDustDetected, goToCleanDust);
         AddTransition(goToCleanDust, dustReached, PATROL);
 
         /* STAGE 4: set the initial state*/
