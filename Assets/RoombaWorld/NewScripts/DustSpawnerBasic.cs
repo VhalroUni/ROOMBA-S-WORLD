@@ -1,7 +1,7 @@
 using Pathfinding;
 using UnityEngine;
 
-public class DustSpawner : MonoBehaviour
+public class DustSpawnerBasic : MonoBehaviour
 {
     [Header("Timing")]
     public float spawnEverySeconds = 5f;

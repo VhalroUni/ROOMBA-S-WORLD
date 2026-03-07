@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MouseSpawner : MonoBehaviour
+public class MouseSpawnerBasic : MonoBehaviour
 {
     [Header("Times")]
     public float baseSeconds = 30f;
