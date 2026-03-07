@@ -16,8 +16,6 @@ public class FSM_Mouse : FiniteStateMachine
     private GameObject currentPatrolPoint;
     private GameObject currentExit;
 
-    private GameObject tempTarget;
-
 
     public override void OnEnter()
     {
@@ -47,19 +45,22 @@ public class FSM_Mouse : FiniteStateMachine
          */
 
         State goRandom = new State("Mouse go random walkable location",
-            () => { currentPatrolPoint = LocationHelper.RandomPatrolPoint(); goToTarget.target = currentPatrolPoint; }, // write on enter logic inside {}
+            () => { 
+                currentPatrolPoint = LocationHelper.RandomPatrolPoint(); 
+                goToTarget.target = currentPatrolPoint; 
+                goToTarget.enabled = true; }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
-            () => { goToTarget.target = null; }  // write on exit logic inisde {}  
+            () => { goToTarget.target = null; goToTarget.enabled = false; }  // write on exit logic inisde {}  
         );
 
         State doPoo = new State("Mouse do poo",
-           () => { Instantiate(blackboard.pooPrefab, gameObject.transform); }, // write on enter logic inside {}
+           () => { Instantiate(blackboard.pooPrefab, transform.position, Quaternion.identity); }, // write on enter logic inside {}
            () => { }, // write in state logic inside {}
            () => { }  // write on exit logic inisde {}  
        );
 
         State entryAndExit = new State("Mouse exit the scene",
-           () => { currentExit = LocationHelper.RandomEntryExitPoint(); }, // write on enter logic inside {}
+           () => { currentExit = LocationHelper.RandomEntryExitPoint(); goToTarget.target = currentExit; }, // write on enter logic inside {}
            () => { }, // write in state logic inside {}
            () => { Object.Destroy(gameObject); }  // write on exit logic inisde {}  
        );

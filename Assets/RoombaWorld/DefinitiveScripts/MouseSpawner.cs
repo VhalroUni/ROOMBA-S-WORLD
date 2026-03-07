@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class MouseSpawner : MonoBehaviour
 {
-    private GameObject sample;
     private GameObject mousePrefab;
     private float timer;
 
@@ -12,11 +11,10 @@ public class MouseSpawner : MonoBehaviour
 
     void Start()
     {
-        sample = Resources.Load<GameObject>("MOUSE");
-        if (sample == null)
+        mousePrefab = Resources.Load<GameObject>("MOUSE");
+        if (mousePrefab == null)
             Debug.LogError("No MOUSE prefab found as a resource");
 
-        mousePrefab = LocationHelper.RandomEntryExitPoint();
         ResetTimer();
     }
 
@@ -25,7 +23,10 @@ public class MouseSpawner : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer > 0f) return;
 
-        mousePrefab = LocationHelper.RandomEntryExitPoint();
+        GameObject randomPoint = LocationHelper.RandomEntryExitPoint();
+
+        Instantiate(mousePrefab, randomPoint.transform.position, Quaternion.identity);
+
         ResetTimer();
     }
 
@@ -33,6 +34,7 @@ public class MouseSpawner : MonoBehaviour
     {
         timer = Random.Range(baseSeconds - plusMinusSeconds, baseSeconds + plusMinusSeconds);
 
-        if (timer < 0.1f) timer = 0.1f;
+        if (timer < 0.1f) 
+            timer = 0.1f;
     }
 }
