@@ -373,7 +373,7 @@ MonoBehaviour:
   - {x: 16.602095, y: -0.000003381721, z: -35.63211}
   convex: 1
   minBoundsHeight: 1
-  penaltyDelta: 0
+  penaltyDelta: 10000
   modifyWalkability: 0
   setWalkability: 0
   applyOnStart: 1
@@ -797,7 +797,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 4294967295
     useGraphRaycasting: 0
-  traversableTags: -1
+  traversableTags: -3
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
@@ -2700,7 +2700,7 @@ MonoBehaviour:
   - {x: -47.890503, y: 0.0000043732134, z: 91.31488}
   convex: 1
   minBoundsHeight: 1
-  penaltyDelta: 0
+  penaltyDelta: 10000
   modifyWalkability: 0
   setWalkability: 0
   applyOnStart: 1
@@ -6409,7 +6409,7 @@ MonoBehaviour:
   applyOnScan: 1
   updatePhysics: 0
   resetPenaltyOnPhysics: 1
-  updateErosion: 1
+  updateErosion: 0
   modifyTag: 1
   setTag: 1
   legacyMode: 0
@@ -10474,6 +10474,7 @@ MonoBehaviour:
   - {x: -4.678197, y: -0.00000024455161, z: -2.051448}
   - {x: -5.093824, y: -0.00000013357248, z: -1.1204875}
   - {x: -5.3095036, y: -0.00000000954564, z: -0.08007489}
+  - {x: -5.3048296, y: -0.0000000087520595, z: -0.07341773}
   - {x: -5.0783777, y: -0.000015123767, z: 1.1326631}
   - {x: -4.7205644, y: -0.0000149934995, z: 2.225457}
   - {x: -3.415716, y: -0.000014869615, z: 3.264705}
@@ -10483,6 +10484,7 @@ MonoBehaviour:
   - {x: 3.5652514, y: -0.00001487844, z: 3.1906412}
   - {x: 4.861233, y: -0.000014981192, z: 2.328701}
   - {x: 5.5037594, y: -0.000015129834, z: 1.0818022}
+  - {x: 5.5467405, y: -0.000000003667893, z: -0.030768646}
   - {x: 5.5700507, y: -0.0000000084728, z: -0.07107525}
   - {x: 5.4686813, y: -0.000000115779955, z: -0.9712333}
   - {x: 5.0486445, y: -0.0000002584344, z: -2.1679056}
