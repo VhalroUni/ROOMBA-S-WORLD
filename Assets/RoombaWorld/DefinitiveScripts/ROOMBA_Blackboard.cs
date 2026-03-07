@@ -27,6 +27,7 @@ public class ROOMBA_Blackboard : MonoBehaviour {
     public float baseMaxSpeed;
     public float baseMaxAccel;
 
+
     private TextMesh energyLine;
     
     
@@ -40,6 +41,7 @@ public class ROOMBA_Blackboard : MonoBehaviour {
 	void Update () {
         Discharge(Time.deltaTime);
         energyLine.text = "Charge: " + Mathf.RoundToInt(currentCharge);
+
 
         if (spinning)
         {
@@ -78,7 +80,7 @@ public class ROOMBA_Blackboard : MonoBehaviour {
     }
 
     // private stuff for color changing and spinning and recharging
-    
+
     private SpriteRenderer spriteRenderer;
     
     private bool spinning = false;

@@ -13,12 +13,14 @@ public class DustSpawnerBasic : MonoBehaviour
     public int maxAttempts = 40;
 
     private GameObject dustPrefab;
+    private ROOMBA_Blackboard blackboard;
     private float timer;
 
     void Start()
     {
         dustPrefab = Resources.Load<GameObject>("DUST");
         timer = spawnEverySeconds;
+        blackboard = GameObject.Find("Roomba").GetComponent<ROOMBA_Blackboard>();
     }
 
     void Update()
