@@ -6,11 +6,14 @@ using UnityEngine.Serialization;
 public class ROOMBA_Blackboard : MonoBehaviour {
 
     public float dustDetectionRadius = 60;  // radius for dust detection   
-    public float pooDetectionRadius = 150;   // radius for poo detection    
+    public float pooDetectionRadius = 150; // radius for poo detection    
+    public float chargingStationDetectionRadius = 100; // radius for charging station detection
+    public float patrolPointDetectionRadius = 50; // radius for patrol point detection (for patrolling state)
 
     public float dustReachedRadius = 5; // dust reachability radius
     public float pooReachedRadius = 5;  // poo reachability radius
     public float chargingStationReachedRadius = 4;  // reachability radius
+    public float patrolPointReachedRadius = 1; // reachability radius for patrol points
 
     public float pooCleaningTime = 2; // time to clean poo (= spinning time)
 
@@ -20,6 +23,9 @@ public class ROOMBA_Blackboard : MonoBehaviour {
     public float maxCharge = 99;    // max threshold. Leave charging station if currentCharge reaches this level
 
     public float currentCharge = 100;
+
+    public float baseMaxSpeed;
+    public float baseMaxAccel;
 
     private TextMesh energyLine;
     
@@ -34,6 +40,7 @@ public class ROOMBA_Blackboard : MonoBehaviour {
 	void Update () {
         Discharge(Time.deltaTime);
         energyLine.text = "Charge: " + Mathf.RoundToInt(currentCharge);
+
         if (spinning)
         {
             transform.Rotate(0, 0,  spinSpeed * Time.deltaTime);
@@ -69,7 +76,7 @@ public class ROOMBA_Blackboard : MonoBehaviour {
         currentCharge = currentCharge - deltaTime * energyConsumptionPerSecond;
         if (currentCharge < 0) currentCharge = 0;
     }
-    
+
     // private stuff for color changing and spinning and recharging
     
     private SpriteRenderer spriteRenderer;

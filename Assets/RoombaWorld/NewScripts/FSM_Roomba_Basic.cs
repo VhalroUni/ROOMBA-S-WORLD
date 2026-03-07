@@ -1,6 +1,7 @@
 using FSMs;
 using UnityEngine;
 using Steerings;
+using System.Runtime.CompilerServices;
 
 [CreateAssetMenu(fileName = "FSM_Roomba_Basic", menuName = "Finite State Machines/FSM_Roomba_Basic", order = 1)]
 public class FSM_Roomba_Basic : FiniteStateMachine
@@ -9,11 +10,14 @@ public class FSM_Roomba_Basic : FiniteStateMachine
     private SteeringContext steeringContext;
     private ROOMBA_Blackboard blackboard;
 
+    private float distanceToPoo;
+
     private float baseMaxSpeed;
     private float baseMaxAccel;
 
     private GameObject currentPatrolPoint;
     private GameObject currentPoo;
+    private GameObject otherPoo; // per detectar canvis de caca mentre vas a una
     private GameObject currentDust;
     private GameObject currentChargingStation;
 
@@ -63,17 +67,10 @@ public class FSM_Roomba_Basic : FiniteStateMachine
         State goCharge = new State("EMERGENCY_GO_CHARGE",
             () => {
                 ResetSpeed();
-                currentChargingStation = GetNearestWithTag("ENERGY");
+                currentChargingStation = SensingUtils.FindInstanceWithinRadius(gameObject, "ENERGY", blackboard.chargingStationDetectionRadius);
                 if (goToTarget != null) goToTarget.target = currentChargingStation;
             },
-            () => {
-                // si no n'hi ha, reintenta
-                if (currentChargingStation == null)
-                {
-                    currentChargingStation = GetNearestWithTag("ENERGY");
-                    if (goToTarget != null) goToTarget.target = currentChargingStation;
-                }
-            },
+            () => { },
             () => { }
         );
 
@@ -81,28 +78,20 @@ public class FSM_Roomba_Basic : FiniteStateMachine
             () => {
                 if (goToTarget != null) goToTarget.target = null;
                 ResetSpeed();
-                if (blackboard != null) blackboard.startRecharging();
+                blackboard.startRecharging();
             },
             () => { },
-            () => {
-                if (blackboard != null) blackboard.stopRecharging();
-            }
+            () => { blackboard.stopRecharging(); }
         );
 
         // ---------------- NORMAL: PATROL ----------------
         State patrol = new State("NORMAL_PATROL",
             () => {
                 ResetSpeed();
-                currentPatrolPoint = GetRandomWithTag("PATROLPOINT");
+                currentPatrolPoint = SensingUtils.FindRandomInstanceWithinRadius(gameObject,"PATROLPOINT", blackboard.patrolPointDetectionRadius);
                 if (goToTarget != null) goToTarget.target = currentPatrolPoint;
             },
-            () => {
-                if (Reached(currentPatrolPoint, (blackboard != null) ? blackboard.dustReachedRadius : 5f))
-                {
-                    currentPatrolPoint = GetRandomWithTag("PATROLPOINT");
-                    if (goToTarget != null) goToTarget.target = currentPatrolPoint;
-                }
-            },
+            () => { },
             () => { }
         );
 
@@ -110,17 +99,25 @@ public class FSM_Roomba_Basic : FiniteStateMachine
         State goPooFast = new State("NORMAL_GO_POO_FAST",
             () => {
                 ApplyFastSpeed();
-                currentPoo = GetNearestClose("POO", GetPooDetectionRadius());
+                currentPoo = SensingUtils.FindInstanceWithinRadius(gameObject,"POO", blackboard.pooDetectionRadius);
+                distanceToPoo = SensingUtils.DistanceToTarget(gameObject, currentPoo);
                 if (goToTarget != null) goToTarget.target = currentPoo;
             },
             () => {
                 // si apareix una caca més propera mentre hi vas -> canvia
-                GameObject nearer = GetNearestClose("POO", GetPooDetectionRadius());
-                if (nearer != null && nearer != currentPoo)
+
+                otherPoo = SensingUtils.FindInstanceWithinRadius(gameObject, "POO", blackboard.pooDetectionRadius);
+                while (otherPoo = currentPoo)
                 {
-                    currentPoo = nearer;
-                    if (goToTarget != null) goToTarget.target = currentPoo;
+                    otherPoo = SensingUtils.FindInstanceWithinRadius(gameObject, "POO", blackboard.pooDetectionRadius);
+                    if (otherPoo != currentPoo) break;
                 }
+                float distanceToOtherPoo = SensingUtils.DistanceToTarget(gameObject, otherPoo);
+                if (distanceToOtherPoo < distanceToPoo)
+                {
+                    if (goToTarget != null) goToTarget.target = otherPoo;
+                }
+
             },
             () => { }
         );
@@ -172,13 +169,18 @@ public class FSM_Roomba_Basic : FiniteStateMachine
 
         // ---------------- TRANSITIONS ----------------
         // Emergency priority
-        Transition lowEnergy = new Transition("LOW_ENERGY", () => (blackboard != null) && blackboard.EnergyIsLow());
+        Transition lowEnergy = new Transition("LOW_ENERGY", 
+            () => (blackboard != null) && blackboard.EnergyIsLow());
         Transition energyFull = new Transition("ENERGY_FULL", () => (blackboard != null) && blackboard.EnergyIsFull());
         Transition reachedStation = new Transition("REACHED_STATION",
             () => Reached(currentChargingStation, (blackboard != null) ? blackboard.chargingStationReachedRadius : 4f)
         );
 
         // Normal priority: poo > dust > patrol
+        Transition patrolReached = new Transition("Actual patrol point has been reached",
+            () => { return SensingUtils.DistanceToTarget(gameObject, currentPatrolPoint) <= blackboard.patrolPointReachedRadius;}, // write the condition checkeing code in {}
+            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+        );
         Transition closePoo = new Transition("CLOSE_POO", () => GetNearestClose("POO", GetPooDetectionRadius()) != null);
         Transition closeDust = new Transition("CLOSE_DUST", () => GetNearestClose("DUST", GetDustDetectionRadius()) != null);
 
@@ -204,6 +206,7 @@ public class FSM_Roomba_Basic : FiniteStateMachine
         AddTransition(recharging, energyFull, patrol);
 
         // Normal decisions
+        AddTransition(patrol, patrolReached, patrol); // si arribo al punt de patrulla -> en tria un altre
         AddTransition(patrol, closePoo, goPooFast);
         AddTransition(patrol, closeDust, goDust);
 
