@@ -681,19 +681,19 @@ MonoBehaviour:
   dustDetectionRadius: 60
   pooDetectionRadius: 150
   chargingStationDetectionRadius: 100
-  patrolPointDetectionRadius: 5
-  dustReachedRadius: 5
-  pooReachedRadius: 5
-  chargingStationReachedRadius: 4
-  patrolPointReachedRadius: 1
+  patrolPointDetectionRadius: 7
+  dustReachedRadius: 7
+  pooReachedRadius: 7
+  chargingStationReachedRadius: 7
+  patrolPointReachedRadius: 7
   pooCleaningTime: 2
   energyConsumptionPerSecond: 1
   energyRechargePerSecond: 15
   minCharge: 15
   maxCharge: 99
   currentCharge: 100
-  baseMaxSpeed: 0
-  baseMaxAccel: 0
+  baseMaxSpeed: 2
+  baseMaxAccel: 4
 --- !u!114 &111757792
 MonoBehaviour:
   m_ObjectHideFlags: 0

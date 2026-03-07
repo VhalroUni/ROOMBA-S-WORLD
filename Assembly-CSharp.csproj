@@ -78,8 +78,8 @@
     <Compile Include="Assets\AICourse\Steerings\Utils.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_FindByName.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Conditions\CONDITION_InstanceNear.cs" />
+    <Compile Include="Assets\RoombaWorld\DefinitiveScripts\FSM_Mouse.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_SetTag.cs" />
-    <Compile Include="Assets\RoombaWorld\FSM_Roomba.cs" />
     <Compile Include="Assets\AICourse\Steerings\Flee.cs" />
     <Compile Include="Assets\AICourse\Utilities\DynamicBlackboard.cs" />
     <Compile Include="Assets\AICourse\FSMs\FiniteStateMachine.cs" />
@@ -90,7 +90,6 @@
     <Compile Include="Assets\RoombaWorld\OtherScripts\GoToTarget.cs" />
     <Compile Include="Assets\AICourse\Steerings\WanderPlusAvoid.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\Condition.cs" />
-    <Compile Include="Assets\RoombaWorld\FSM_MouseEmergency.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_DebugLog.cs" />
     <Compile Include="Assets\AICourse\Steerings\WanderAroundPlusAvoid.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\DynamicSelector.cs" />
@@ -103,11 +102,11 @@
     <Compile Include="Assets\AICourse\BTs\Core\Node.cs" />
     <Compile Include="Assets\AICourse\Steerings\WanderAround.cs" />
     <Compile Include="Assets\AICourse\Steerings\FlockingAroundPlusAvoidance.cs" />
-    <Compile Include="Assets\RoombaWorld\FSM_Mouse.cs" />
     <Compile Include="Assets\AICourse\Steerings\SteeringContext.cs" />
     <Compile Include="Assets\AICourse\Steerings\Wander.cs" />
     <Compile Include="Assets\AICourse\Steerings\Evade.cs" />
     <Compile Include="Assets\AICourse\Utilities\ShowRadiiPro.cs" />
+    <Compile Include="Assets\RoombaWorld\DefinitiveScripts\ROOMBA_Blackboard.cs" />
     <Compile Include="Assets\AICourse\Steerings\Arrive.cs" />
     <Compile Include="Assets\AICourse\Utilities\SensingUtils.cs" />
     <Compile Include="Assets\AICourse\FSMs\State.cs" />
@@ -119,13 +118,13 @@
     <Compile Include="Assets\AICourse\Steerings\GroupContext.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_WaitForSeconds.cs" />
     <Compile Include="Assets\AICourse\Steerings\Face.cs" />
-    <Compile Include="Assets\RoombaWorld\ROOMBA_Blackboard.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\RepeatTimesDecorator.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_RunForever.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\ParallelOr.cs" />
     <Compile Include="Assets\AICourse\Utilities\ShowRadii.cs" />
     <Compile Include="Assets\AICourse\Utilities\KBDMove.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\Selector.cs" />
+    <Compile Include="Assets\RoombaWorld\DefinitiveScripts\MOUSE_Blackboard.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\LambdaCondition.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_WanderAround.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_Arrive.cs" />
@@ -143,7 +142,6 @@
     <Compile Include="Assets\AICourse\BTs\Core\BehaviourTreeExecutor.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\BehaviourTree.cs" />
     <Compile Include="Assets\AICourse\Steerings\PursuePlusOA.cs" />
-    <Compile Include="Assets\RoombaWorld\MOUSE_Blackboard.cs" />
     <Compile Include="Assets\RoombaWorld\OtherScripts\LocationHelper.cs" />
     <Compile Include="Assets\AICourse\Steerings\FlockingAround.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\Action.cs" />
@@ -161,6 +159,7 @@
     <Compile Include="Assets\AICourse\FSMs\IState.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_FindInstanceWithinRadius.cs" />
     <Compile Include="Assets\RoombaWorld\OtherScripts\StartStopController.cs" />
+    <Compile Include="Assets\RoombaWorld\DefinitiveScripts\FSM_MouseEmergency.cs" />
     <Compile Include="Assets\AICourse\BTs\Core\Sequence.cs" />
     <Compile Include="Assets\RoombaWorld\NewScripts\MouseSpawner.cs" />
     <Compile Include="Assets\AICourse\Steerings\SteeringBehaviour.cs" />

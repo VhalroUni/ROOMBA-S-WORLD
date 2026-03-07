@@ -10,10 +10,10 @@ public class ROOMBA_Blackboard : MonoBehaviour {
     public float chargingStationDetectionRadius = 100; // radius for charging station detection
     public float patrolPointDetectionRadius = 50; // radius for patrol point detection (for patrolling state)
 
-    public float dustReachedRadius = 5; // dust reachability radius
-    public float pooReachedRadius = 5;  // poo reachability radius
-    public float chargingStationReachedRadius = 4;  // reachability radius
-    public float patrolPointReachedRadius = 1; // reachability radius for patrol points
+    public float dustReachedRadius = 7; // dust reachability radius
+    public float pooReachedRadius = 7;  // poo reachability radius
+    public float chargingStationReachedRadius = 7;  // reachability radius
+    public float patrolPointReachedRadius = 7; // reachability radius for patrol points
 
     public float pooCleaningTime = 2; // time to clean poo (= spinning time)
 

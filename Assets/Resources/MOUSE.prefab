@@ -209,6 +209,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooPrefab: {fileID: 1446901862862190, guid: 9082e5f6daa6cbd49852a647c70d3a8c, type: 3}
   roombaDetectionRadius: 50
+  locationReachedRadius: 8
+  exitReachedRadius: 6
+  baseMaxSpeed: 0
+  baseMaxAccel: 0
 --- !u!114 &114462393164921940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823459bfcabf59e4bbb7d30c1033e0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 11400000, guid: 2919b38589e3b794681edbe50eeb2348, type: 2}
+  fsm: {fileID: 11400000, guid: 4e3f8f50b1590c4428da64f66f58c613, type: 2}
   currentState: 
   textMesh: {fileID: 0}
 --- !u!114 &-6025817320332240327

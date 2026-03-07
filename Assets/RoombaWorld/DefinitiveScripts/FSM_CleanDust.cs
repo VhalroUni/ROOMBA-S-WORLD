@@ -12,15 +12,7 @@ public class FSM_CleanDust : FiniteStateMachine
     ROOMBA_Blackboard blackboard;
     GoToTarget goToTarget;
     SteeringContext steeringContext;
-
-    private float ditanceToFirstTarget;
-    private float distanceToSecondTarget;
-
-    private bool normalTarget = true;
-
-    private GameObject targetDust;
     private GameObject currentDust;
-    private GameObject otherDustTarget;
 
     public override void OnEnter()
     {
@@ -49,69 +41,46 @@ public class FSM_CleanDust : FiniteStateMachine
         /* STAGE 1: create the states with their logic(s)
          *-----------------------------------------------*/
          
-        FiniteStateMachine PATROL = ScriptableObject.CreateInstance<FiniteStateMachine>();
+        FiniteStateMachine PATROL = ScriptableObject.CreateInstance<FSM_RoombaPatrol>();
         PATROL.Name = "PATROL";
 
         State goToCleanDust = new State("Go To Dust",
             () => { 
                 ResetSpeed();
-                if (normalTarget) targetDust = currentDust;
-                else targetDust = otherDustTarget;
-
-                goToTarget.target = targetDust;
-
+                goToTarget.target = currentDust;
             }, // write on enter logic inside {}
-            () => { }, // write in state logic inside {}
-            () => { }  // write on exit logic inisde {}
+            () => {
+                float distance = SensingUtils.DistanceToTarget(gameObject, currentDust);
+                Debug.Log("Distance to dust: " + distance);
+            }, // write in state logic inside {}
+            () => { GameObject.Destroy(currentDust); }  // write on exit logic inisde {}
         );
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------*/
 
-        Transition dustNearest = new Transition("New dust is near",
-            () => {
-                otherDustTarget = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);
-                distanceToSecondTarget = SensingUtils.DistanceToTarget(gameObject, otherDustTarget);
-                while (otherDustTarget = currentDust)
-                {
-                    otherDustTarget = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);
-                    distanceToSecondTarget = SensingUtils.DistanceToTarget(gameObject, otherDustTarget);
-                }
-                if (ditanceToFirstTarget > distanceToSecondTarget) return true;
-                return false;
-
-            }, // write the condition checkeing code in {}
-            () => { normalTarget = false; }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
-        );
-
-        Transition dustDetected = new Transition("A dust is near",
+        Transition dustDetected = new Transition("Roomba detected dust",
             () => { return currentDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius); }, // write the condition checkeing code in {}
-            () => { normalTarget = true; }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
         );
 
         Transition dustReached = new Transition("Roomba reached the dust",
-            () => { return SensingUtils.DistanceToTarget(gameObject, targetDust) <= blackboard.dustReachedRadius; }, // write the condition checkeing code in {}
+            () => { return SensingUtils.DistanceToTarget(gameObject, currentDust) <= blackboard.dustReachedRadius; }, // write the condition checkeing code in {}
             () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
         );
 
 
         /* STAGE 3: add states and transitions to the FSM 
          * ----------------------------------------------*/
-            
+
         AddStates(PATROL, goToCleanDust);
 
         AddTransition(PATROL, dustDetected, goToCleanDust);
-        AddTransition(goToCleanDust, dustNearest, goToCleanDust);
         AddTransition(goToCleanDust, dustReached, PATROL);
-
-
-
 
         /* STAGE 4: set the initial state*/
 
         initialState = PATROL;
-
-         
 
     }
 
