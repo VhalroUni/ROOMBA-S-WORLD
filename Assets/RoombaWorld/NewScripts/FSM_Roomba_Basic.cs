@@ -5,7 +5,7 @@ using Steerings;
 [CreateAssetMenu(fileName = "FSM_Roomba_Basic", menuName = "Finite State Machines/FSM_Roomba_Basic", order = 1)]
 public class FSM_Roomba_Basic : FiniteStateMachine
 {
-private GoToTarget goToTarget;
+    private GoToTarget goToTarget;
     private SteeringContext steeringContext;
     private ROOMBA_Blackboard blackboard;
 
