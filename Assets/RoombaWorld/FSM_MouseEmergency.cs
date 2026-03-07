@@ -2,34 +2,18 @@ using FSMs;
 using UnityEngine;
 using Steerings;
 
-[CreateAssetMenu(fileName = "FSM_Mouse", menuName = "Finite State Machines/FSM_Mouse", order = 1)]
-public class FSM_Mouse : FiniteStateMachine
+[CreateAssetMenu(fileName = "FSM_MouseEmergency", menuName = "Finite State Machines/FSM_MouseEmergency", order = 1)]
+public class FSM_MouseEmergency : FiniteStateMachine
 {
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
-    private LocationHelper locationHelper;
-    public GameObject mouse;
-    private GoToTarget goToTarget;
-    private SteeringContext steeringContext;
-    private MOUSE_Blackboard blackboard;
-
-    private GameObject roomba;
-    private GameObject currentExit;
-
-    private GameObject tempTarget;
-
 
     public override void OnEnter()
     {
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
          * It's equivalent to the on enter action of any state 
          * Usually this code includes .GetComponent<...> invocations */
-        mouse = GetComponent<GameObject>();
-        locationHelper = new LocationHelper();
-        goToTarget = GetComponent<GoToTarget>();
-        steeringContext = GetComponent<SteeringContext>();
-        blackboard = GetComponent<MOUSE_Blackboard>();
         base.OnEnter(); // do not remove
     }
 
@@ -44,28 +28,15 @@ public class FSM_Mouse : FiniteStateMachine
 
     public override void OnConstruction()
     {
-        /* STAGE 1: create the states with their logic(s)
-         *-----------------------------------------------
-         */
+        //STAGE 1: create the states with their logic(s)
+         FiniteStateMachine DEFAULT = ScriptableObject.CreateInstance<FSM_Mouse>();
+         DEFAULT.Name = "DEFAULT";
 
-        State goRandom = new State("Mouse go random walkable location",
+        State scared = new State("Mouse get scared",
             () => { }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
             () => { }  // write on exit logic inisde {}  
         );
-
-        State doPoo = new State("Mouse do poo",
-           () => { }, // write on enter logic inside {}
-           () => { }, // write in state logic inside {}
-           () => { }  // write on exit logic inisde {}  
-       );
-
-        State entryAndExit = new State("Mouse exit the scene",
-           () => { }, // write on enter logic inside {}
-           () => { }, // write in state logic inside {}
-           () => { }  // write on exit logic inisde {}  
-       );
-
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------
@@ -80,20 +51,16 @@ public class FSM_Mouse : FiniteStateMachine
 
         /* STAGE 3: add states and transitions to the FSM 
          * ----------------------------------------------
-                 */
-
-        AddStates(goRandom, doPoo, entryAndExit);
+         */
+        AddStates(DEFAULT, scared);
 
         //AddTransition(sourceState, transition, destinationState);
 
 
 
+
         /* STAGE 4: set the initial state
-         */
-        initialState = goRandom;
-
-
-
-
+        */
+        initialState = DEFAULT;
     }
 }
