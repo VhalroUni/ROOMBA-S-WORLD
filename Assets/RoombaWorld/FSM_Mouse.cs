@@ -8,6 +8,15 @@ public class FSM_Mouse : FiniteStateMachine
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
+    private GoToTarget goToTarget;
+    private SteeringContext steeringContext;
+    private MOUSE_Blackboard blackboard;
+
+    private GameObject roomba;
+    private GameObject currentExit;
+
+    private GameObject tempTarget;
+
 
     public override void OnEnter()
     {
