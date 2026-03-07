@@ -8,12 +8,19 @@ public class FSM_MouseEmergency : FiniteStateMachine
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
+    private SteeringContext steeringContext;
+    private MOUSE_Blackboard blackboard;
+    private GameObject currentExit;
+    private SpriteRenderer mouse;
 
     public override void OnEnter()
     {
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
          * It's equivalent to the on enter action of any state 
          * Usually this code includes .GetComponent<...> invocations */
+        steeringContext = GetComponent<SteeringContext>();
+        blackboard = GetComponent<MOUSE_Blackboard>();
+        mouse = GetComponent<SpriteRenderer>();
         base.OnEnter(); // do not remove
     }
 
@@ -33,9 +40,14 @@ public class FSM_MouseEmergency : FiniteStateMachine
          DEFAULT.Name = "DEFAULT";
 
         State scared = new State("Mouse get scared",
-            () => { }, // write on enter logic inside {}
+            () => { 
+                mouse.color = Color.green;
+                steeringContext.maxSpeed = blackboard.baseMaxSpeed * 2f;
+                steeringContext.maxSpeed = blackboard.baseMaxSpeed * 4f;
+                currentExit = LocationHelper.NearestExitPoint(gameObject);
+            }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
-            () => { }  // write on exit logic inisde {}  
+            () => { mouse.color = Color.white; }  // write on exit logic inisde {}  
         );
 
         /* STAGE 2: create the transitions with their logic(s)
