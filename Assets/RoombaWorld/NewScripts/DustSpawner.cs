@@ -6,11 +6,10 @@ public class DustSpawner : MonoBehaviour
     [Header("Timing")]
     public float spawnEverySeconds = 5f;
 
-    [Header("Spawn bounds (world units)")]
+    [Header("Spawn bounds")]
     public Vector2 minBounds = new Vector2(-20, -10);
     public Vector2 maxBounds = new Vector2(20, 10);
 
-    [Header("Sampling")]
     public int maxAttempts = 40;
 
     private GameObject dustPrefab;
@@ -32,7 +31,6 @@ public class DustSpawner : MonoBehaviour
 
         GameObject dust = Instantiate(dustPrefab, pos, Quaternion.identity);
 
-        // Color aleatori (SpriteRenderer al root o a un fill)
         var sr = dust.GetComponent<SpriteRenderer>();
         if (sr == null) sr = dust.GetComponentInChildren<SpriteRenderer>();
         if (sr != null) sr.color = Random.ColorHSV();

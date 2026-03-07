@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class MouseSpawner : MonoBehaviour
 {
-    [Header("Timing (seconds)")]
+    [Header("Times")]
     public float baseSeconds = 30f;
     public float plusMinusSeconds = 20f;
 
-    [Header("Entry/Exit points parent")]
-    public Transform entryExitRoot; // arrossega ENTRYEXITPOINTS aquí
+    [Header("EntryExit")]
+    public Transform entryExitRoot;
 
     private GameObject mousePrefab;
     private float timer;
@@ -35,12 +35,6 @@ public class MouseSpawner : MonoBehaviour
 
     private void SpawnMouse()
     {
-        if (entryExitRoot == null || entryExitRoot.childCount == 0)
-        {
-            Debug.LogWarning("MouseSpawner: entryExitRoot buit. Assigna ENTRYEXITPOINTS i crea punts dins.");
-            return;
-        }
-
         int idx = Random.Range(0, entryExitRoot.childCount);
         Transform spawnPoint = entryExitRoot.GetChild(idx);
 
