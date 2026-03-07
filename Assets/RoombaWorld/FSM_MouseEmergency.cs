@@ -12,6 +12,7 @@ public class FSM_MouseEmergency : FiniteStateMachine
     private MOUSE_Blackboard blackboard;
     private GameObject currentExit;
     private SpriteRenderer mouse;
+    private GameObject roomba;
 
     public override void OnEnter()
     {
@@ -20,7 +21,6 @@ public class FSM_MouseEmergency : FiniteStateMachine
          * Usually this code includes .GetComponent<...> invocations */
         steeringContext = GetComponent<SteeringContext>();
         blackboard = GetComponent<MOUSE_Blackboard>();
-        mouse = GetComponent<SpriteRenderer>();
         base.OnEnter(); // do not remove
     }
 
@@ -52,13 +52,11 @@ public class FSM_MouseEmergency : FiniteStateMachine
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------
-
-        Transition varName = new Transition("TransitionName",
-            () => { }, // write the condition checkeing code in {}
+        */
+        Transition roombaDetect = new Transition("Roomba detect",
+            () => { return SensingUtils.DistanceToTarget(gameObject, roomba) < blackboard.roombaDetectionRadius; }, // write the condition checkeing code in {}
             () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
         );
-
-        */
 
 
         /* STAGE 3: add states and transitions to the FSM 
@@ -66,9 +64,7 @@ public class FSM_MouseEmergency : FiniteStateMachine
          */
         AddStates(DEFAULT, scared);
 
-        //AddTransition(sourceState, transition, destinationState);
-
-
+        AddTransition(DEFAULT, roombaDetect, scared);
 
 
         /* STAGE 4: set the initial state

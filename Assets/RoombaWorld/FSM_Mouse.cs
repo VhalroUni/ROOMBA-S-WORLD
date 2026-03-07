@@ -13,7 +13,6 @@ public class FSM_Mouse : FiniteStateMachine
     private SteeringContext steeringContext;
     private MOUSE_Blackboard blackboard;
 
-    private GameObject roomba;
     private GameObject currentPatrolPoint;
     private GameObject currentExit;
 
@@ -68,13 +67,16 @@ public class FSM_Mouse : FiniteStateMachine
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------
-
-        Transition varName = new Transition("TransitionName",
-            () => { }, // write the condition checkeing code in {}
+        */
+        Transition locationReached = new Transition("Location Reached",
+            () => { return SensingUtils.DistanceToTarget(gameObject, currentPatrolPoint) < blackboard.locationReachedRadius; }, // write the condition checkeing code in {}
             () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
         );
 
-        */
+        Transition exitReached = new Transition("Location Reached",
+            () => { return SensingUtils.DistanceToTarget(gameObject, currentExit) < blackboard.exitReachedRadius; }, // write the condition checkeing code in {}
+            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+        );
 
 
         /* STAGE 3: add states and transitions to the FSM 
@@ -83,16 +85,12 @@ public class FSM_Mouse : FiniteStateMachine
 
         AddStates(goRandom, doPoo, entryAndExit);
 
-        //AddTransition(sourceState, transition, destinationState);
-
+        AddTransition(goRandom, locationReached, doPoo);
+        AddTransition(doPoo, exitReached, entryAndExit);
 
 
         /* STAGE 4: set the initial state
          */
         initialState = goRandom;
-
-
-
-
     }
 }
