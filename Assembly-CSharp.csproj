@@ -79,6 +79,7 @@
     <Compile Include="Assets\AICourse\Steerings\Utils.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_FindByName.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Conditions\CONDITION_InstanceNear.cs" />
+    <Compile Include="Assets\RoombaWorld\DefinitiveScripts\FSM_CleanPoo.cs" />
     <Compile Include="Assets\RoombaWorld\DefinitiveScripts\FSM_Mouse.cs" />
     <Compile Include="Assets\AICourse\BTs\PredefinedTasks\Actions\ACTION_SetTag.cs" />
     <Compile Include="Assets\AICourse\Steerings\Flee.cs" />
