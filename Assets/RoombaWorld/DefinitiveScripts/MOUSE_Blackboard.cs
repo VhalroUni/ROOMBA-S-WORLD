@@ -5,6 +5,7 @@ using Pathfinding;
 public class MOUSE_Blackboard : MonoBehaviour
 {
     public GameObject pooPrefab;
+    public GameObject patrolPointPrefab;
     public float roombaDetectionRadius = 20f;
     public float locationReachedRadius = 8f;
     public float exitReachedRadius = 6f;

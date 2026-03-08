@@ -208,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooPrefab: {fileID: 1446901862862190, guid: 9082e5f6daa6cbd49852a647c70d3a8c, type: 3}
+  patrolPointPrefab: {fileID: 8765480546036022486, guid: 7c29d57ff32e9d241affabbdec781cf3, type: 3}
   roombaDetectionRadius: 50
   locationReachedRadius: 8
   exitReachedRadius: 7

@@ -11,6 +11,8 @@ public class FSM_Mouse : FiniteStateMachine
     private GoToTarget goToTarget;
     private MOUSE_Blackboard blackboard;
 
+    private Vector3 prefabPosition;
+
     private GameObject currentPatrolPoint;
     private GameObject currentExit;
 
@@ -41,8 +43,9 @@ public class FSM_Mouse : FiniteStateMachine
          */
 
         State goRandom = new State("Mouse go random walkable location",
-            () => { 
-                currentPatrolPoint = LocationHelper.RandomPatrolPoint(); 
+            () => {
+                prefabPosition = LocationHelper.RandomWalkableLocation();
+                currentPatrolPoint = Instantiate(blackboard.patrolPointPrefab, prefabPosition, Quaternion.identity);
                 goToTarget.target = currentPatrolPoint; 
             }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
