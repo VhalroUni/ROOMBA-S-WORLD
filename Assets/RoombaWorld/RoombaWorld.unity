@@ -680,7 +680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ROOMBA_Blackboard
   dustDetectionRadius: 60
   pooDetectionRadius: 150
-  chargingStationDetectionRadius: 200
+  chargingStationDetectionRadius: 400
   patrolPointDetectionRadius: 7
   dustReachedRadius: 10
   pooReachedRadius: 7
@@ -688,7 +688,7 @@ MonoBehaviour:
   patrolPointReachedRadius: 7
   pooCleaningTime: 2
   energyConsumptionPerSecond: 1
-  energyRechargePerSecond: 15
+  energyRechargePerSecond: 1
   minCharge: 15
   maxCharge: 99
   currentCharge: 99
