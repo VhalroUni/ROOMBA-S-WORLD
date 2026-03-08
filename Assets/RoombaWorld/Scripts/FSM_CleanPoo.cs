@@ -21,9 +21,8 @@ public class FSM_CleanPoo : FiniteStateMachine
     private GameObject targetPoo;
     private GameObject otherPoo;
 
-    [Header("Fast multipliers (poo urgency)")]
-    public float fastSpeedMult = 2f; // x2
-    public float fastAccelMult = 4f; // x4
+    public float fastSpeedMult = 2f; 
+    public float fastAccelMult = 4f;
 
     public override void OnEnter()
     {
@@ -94,18 +93,15 @@ public class FSM_CleanPoo : FiniteStateMachine
          * ---------------------------------------------------*/
 
         Transition pooDeteceted = new Transition("Roomba detected a poo",
-            () => { return targetPoo = SensingUtils.FindRandomInstanceWithinRadius(gameObject, "POO", blackboard.pooDetectionRadius); }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return targetPoo = SensingUtils.FindRandomInstanceWithinRadius(gameObject, "POO", blackboard.pooDetectionRadius); } // write the condition checkeing code in {}
         );
 
         Transition pooReached = new Transition("Roomba reached the poo",
-            () => { return SensingUtils.DistanceToTarget(gameObject, targetPoo) <= blackboard.pooReachedRadius; }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return SensingUtils.DistanceToTarget(gameObject, targetPoo) <= blackboard.pooReachedRadius; } // write the condition checkeing code in {}
         );
 
         Transition pooDesapeared = new Transition("Roomba cleaned the poo",
-            () => { return timer >= blackboard.pooCleaningTime; }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return timer >= blackboard.pooCleaningTime; } // write the condition checkeing code in {}
         );
 
 
@@ -120,13 +116,9 @@ public class FSM_CleanPoo : FiniteStateMachine
 
 
 
-
         /* STAGE 4: set the initial state*/
 
         initialState = CLEAN_DUST;
-
-         
-
     }
 
     private void ResetSpeed()

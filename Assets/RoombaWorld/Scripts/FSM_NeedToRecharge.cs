@@ -9,7 +9,6 @@ public class FSM_NeedToRecharge : FiniteStateMachine
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
-    SteeringContext steeringContext;
     ROOMBA_Blackboard blackboard;
     GoToTarget goToTarget;
 
@@ -23,7 +22,6 @@ public class FSM_NeedToRecharge : FiniteStateMachine
 
         blackboard = GetComponent<ROOMBA_Blackboard>();
         goToTarget = GetComponent<GoToTarget>();
-        steeringContext = GetComponent<SteeringContext>();
         base.OnEnter(); // do not remove
     }
 
@@ -69,20 +67,16 @@ public class FSM_NeedToRecharge : FiniteStateMachine
          * ---------------------------------------------------*/
 
         Transition batteryLow = new Transition("Battery is low",
-            () => { return blackboard.EnergyIsLow(); }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return blackboard.EnergyIsLow(); } // write the condition checkeing code in {}
         );
 
         Transition fullyCharged = new Transition("Battery is 100%",
-            () => { return blackboard.EnergyIsFull(); }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return blackboard.EnergyIsFull(); } // write the condition checkeing code in {}
         );
 
         Transition stationReached = new Transition("Station is reached",
-            () => { return SensingUtils.DistanceToTarget(gameObject, stationTarget) <= blackboard.chargingStationReachedRadius; }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return SensingUtils.DistanceToTarget(gameObject, stationTarget) <= blackboard.chargingStationReachedRadius; } // write the condition checkeing code in {}
         );
-
 
 
 
@@ -96,13 +90,8 @@ public class FSM_NeedToRecharge : FiniteStateMachine
         AddTransition(charging, fullyCharged, CLEAN_POO);
 
 
-
-
         /* STAGE 4: set the initial state*/
 
         initialState = CLEAN_POO;
-
-         
-
     }
 }
