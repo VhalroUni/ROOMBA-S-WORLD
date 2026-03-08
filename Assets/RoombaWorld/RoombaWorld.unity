@@ -380,7 +380,7 @@ MonoBehaviour:
   applyOnScan: 1
   updatePhysics: 0
   resetPenaltyOnPhysics: 1
-  updateErosion: 1
+  updateErosion: 0
   modifyTag: 1
   setTag: 2
   legacyMode: 0
@@ -1277,13 +1277,13 @@ MonoBehaviour:
   convex: 1
   minBoundsHeight: 1
   penaltyDelta: 0
-  modifyWalkability: 0
+  modifyWalkability: 1
   setWalkability: 0
   applyOnStart: 1
   applyOnScan: 1
   updatePhysics: 0
   resetPenaltyOnPhysics: 1
-  updateErosion: 1
+  updateErosion: 0
   modifyTag: 1
   setTag: 1
   legacyMode: 0
@@ -2458,13 +2458,13 @@ MonoBehaviour:
   convex: 1
   minBoundsHeight: 1
   penaltyDelta: 0
-  modifyWalkability: 0
+  modifyWalkability: 1
   setWalkability: 0
   applyOnStart: 1
   applyOnScan: 1
   updatePhysics: 0
   resetPenaltyOnPhysics: 1
-  updateErosion: 1
+  updateErosion: 0
   modifyTag: 1
   setTag: 1
   legacyMode: 0
@@ -2712,7 +2712,7 @@ MonoBehaviour:
   applyOnScan: 1
   updatePhysics: 0
   resetPenaltyOnPhysics: 1
-  updateErosion: 1
+  updateErosion: 0
   modifyTag: 1
   setTag: 2
   legacyMode: 0
@@ -6404,7 +6404,7 @@ MonoBehaviour:
   convex: 1
   minBoundsHeight: 1
   penaltyDelta: 0
-  modifyWalkability: 0
+  modifyWalkability: 1
   setWalkability: 0
   applyOnStart: 1
   applyOnScan: 1
@@ -10496,13 +10496,13 @@ MonoBehaviour:
   convex: 1
   minBoundsHeight: 1
   penaltyDelta: 0
-  modifyWalkability: 0
+  modifyWalkability: 1
   setWalkability: 0
   applyOnStart: 1
   applyOnScan: 1
   updatePhysics: 0
   resetPenaltyOnPhysics: 1
-  updateErosion: 1
+  updateErosion: 0
   modifyTag: 1
   setTag: 1
   legacyMode: 0
