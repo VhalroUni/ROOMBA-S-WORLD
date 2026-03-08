@@ -9,6 +9,8 @@ public class FSM_NeedToRecharge : FiniteStateMachine
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
+
+    SteeringContext steeringContext;
     ROOMBA_Blackboard blackboard;
     GoToTarget goToTarget;
 
@@ -19,7 +21,8 @@ public class FSM_NeedToRecharge : FiniteStateMachine
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
          * It's equivalent to the on enter action of any state 
          * Usually this code includes .GetComponent<...> invocations */
-
+        
+        steeringContext = GetComponent<SteeringContext>();
         blackboard = GetComponent<ROOMBA_Blackboard>();
         goToTarget = GetComponent<GoToTarget>();
         base.OnEnter(); // do not remove
@@ -44,6 +47,7 @@ public class FSM_NeedToRecharge : FiniteStateMachine
 
         State goToCharge = new State("Roomba is going to charge station",
             () => {
+                ResetSpeed();
                 stationTarget = SensingUtils.FindInstanceWithinRadius(gameObject, "ENERGY", blackboard.chargingStationDetectionRadius);
                 goToTarget.target = stationTarget;
             }, // write on enter logic inside {}
@@ -93,5 +97,12 @@ public class FSM_NeedToRecharge : FiniteStateMachine
         /* STAGE 4: set the initial state*/
 
         initialState = CLEAN_POO;
+    }
+
+    private void ResetSpeed()
+    {
+        if (steeringContext == null) return;
+        steeringContext.maxSpeed = blackboard.baseMaxSpeed;
+        steeringContext.maxAcceleration = blackboard.baseMaxAccel;
     }
 }

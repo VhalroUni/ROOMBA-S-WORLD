@@ -691,7 +691,7 @@ MonoBehaviour:
   energyRechargePerSecond: 15
   minCharge: 15
   maxCharge: 99
-  currentCharge: 99
+  currentCharge: 20
   baseMaxSpeed: 2
   baseMaxAccel: 4
 --- !u!114 &111757792
