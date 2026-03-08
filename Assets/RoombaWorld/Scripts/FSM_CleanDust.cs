@@ -66,13 +66,11 @@ public class FSM_CleanDust : FiniteStateMachine
          * ---------------------------------------------------*/
 
         Transition dustReached = new Transition("Roomba reached the dust",
-            () => { return SensingUtils.DistanceToTarget(gameObject, targetDust) <= blackboard.dustReachedRadius; }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return SensingUtils.DistanceToTarget(gameObject, targetDust) <= blackboard.dustReachedRadius; } // write the condition checkeing code in {}
         );
 
         Transition newDustDetected = new Transition("Roomba detected another dust near than the other",
-            () => { return targetDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);}, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return targetDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius); } // write the condition checkeing code in {}
         );
 
         /* STAGE 3: add states and transitions to the FSM 
@@ -86,7 +84,6 @@ public class FSM_CleanDust : FiniteStateMachine
         /* STAGE 4: set the initial state*/
 
         initialState = PATROL;
-
     }
 
     private void ResetSpeed()

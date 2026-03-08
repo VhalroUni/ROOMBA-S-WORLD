@@ -73,8 +73,7 @@ public class FSM_MouseEmergency : FiniteStateMachine
         );
 
         Transition exitReached = new Transition("Location Reached",
-            () => { return SensingUtils.DistanceToTarget(gameObject, currentExit) < blackboard.exitReachedRadius; }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return SensingUtils.DistanceToTarget(gameObject, currentExit) < blackboard.exitReachedRadius; } // write the condition checkeing code in {}
         );
 
 

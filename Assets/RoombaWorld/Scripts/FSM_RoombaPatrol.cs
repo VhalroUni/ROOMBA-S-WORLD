@@ -58,18 +58,13 @@ public class FSM_RoombaPatrol : FiniteStateMachine
             () => { }  // write on exit logic inisde {}
         );
 
-         
-
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------*/
 
         Transition patrolReached = new Transition("Patrol point reached",
-            () => { return goToTarget.routeTerminated();}, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return goToTarget.routeTerminated(); } // write the condition checkeing code in {}
         );
-
-       
 
 
         /* STAGE 3: add states and transitions to the FSM 
@@ -80,17 +75,11 @@ public class FSM_RoombaPatrol : FiniteStateMachine
         AddTransition(patrolling, patrolReached, patrolling);
 
 
-
-
         /* STAGE 4: set the initial state */
 
         initialState = patrolling;
-
-        
-
     }
 
-    /* STAGE 5: Add more functions to help the fsm */
     private void ResetSpeed()
     {
         if (steeringContext == null) return;

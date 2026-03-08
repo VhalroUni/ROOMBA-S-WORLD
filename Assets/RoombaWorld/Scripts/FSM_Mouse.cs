@@ -69,13 +69,11 @@ public class FSM_Mouse : FiniteStateMachine
          * ---------------------------------------------------
         */
         Transition locationReached = new Transition("Location Reached",
-            () => { return SensingUtils.DistanceToTarget(gameObject, currentPatrolPoint) < blackboard.locationReachedRadius; }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return SensingUtils.DistanceToTarget(gameObject, currentPatrolPoint) < blackboard.locationReachedRadius; } // write the condition checkeing code in {}
         );
 
         Transition exitReached = new Transition("Location Reached",
-            () => { return SensingUtils.DistanceToTarget(gameObject, currentExit) < blackboard.exitReachedRadius; }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+            () => { return SensingUtils.DistanceToTarget(gameObject, currentExit) < blackboard.exitReachedRadius; } // write the condition checkeing code in {}
         );
 
 
