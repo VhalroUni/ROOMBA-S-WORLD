@@ -45,11 +45,16 @@ public class FSM_MouseEmergency : FiniteStateMachine
         State scared = new State("Mouse get scared",
             () => { 
                 mouse.color = Color.green;
-                
+                steeringContext.maxAcceleration = 480f;
+                steeringContext.maxSpeed = 40f;
                 goToTarget.target = currentExit;
             }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
-            () => { mouse.color = Color.white; }  // write on exit logic inisde {}  
+            () => {
+                steeringContext.maxAcceleration = 120f;
+                steeringContext.maxSpeed = 20f;
+                mouse.color = Color.white; 
+            }  // write on exit logic inisde {}  
         );
 
         State die = new State("Mouse died",
