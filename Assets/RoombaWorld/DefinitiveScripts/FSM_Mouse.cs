@@ -8,9 +8,7 @@ public class FSM_Mouse : FiniteStateMachine
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
-    public GameObject mouse;
     private GoToTarget goToTarget;
-    private SteeringContext steeringContext;
     private MOUSE_Blackboard blackboard;
 
     private GameObject currentPatrolPoint;
@@ -22,9 +20,7 @@ public class FSM_Mouse : FiniteStateMachine
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
          * It's equivalent to the on enter action of any state 
          * Usually this code includes .GetComponent<...> invocations */
-        mouse = GetComponent<GameObject>();
         goToTarget = GetComponent<GoToTarget>();
-        steeringContext = GetComponent<SteeringContext>();
         blackboard = GetComponent<MOUSE_Blackboard>();
         base.OnEnter(); // do not remove
     }
@@ -48,21 +44,21 @@ public class FSM_Mouse : FiniteStateMachine
             () => { 
                 currentPatrolPoint = LocationHelper.RandomPatrolPoint(); 
                 goToTarget.target = currentPatrolPoint; 
-                goToTarget.enabled = true; }, // write on enter logic inside {}
+            }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
-            () => { goToTarget.target = null; goToTarget.enabled = false; }  // write on exit logic inisde {}  
+            () => { }  // write on exit logic inisde {}  
         );
 
         State doPoo = new State("Mouse do poo",
-           () => { Instantiate(blackboard.pooPrefab, transform.position, Quaternion.identity); }, // write on enter logic inside {}
+           () => { Instantiate(blackboard.pooPrefab, transform.position, Quaternion.identity); currentExit = LocationHelper.RandomEntryExitPoint(); goToTarget.target = currentExit; }, // write on enter logic inside {}
            () => { }, // write in state logic inside {}
            () => { }  // write on exit logic inisde {}  
        );
 
         State entryAndExit = new State("Mouse exit the scene",
-           () => { currentExit = LocationHelper.RandomEntryExitPoint(); goToTarget.target = currentExit; }, // write on enter logic inside {}
+           () => { Object.Destroy(gameObject);}, // write on enter logic inside {}
            () => { }, // write in state logic inside {}
-           () => { Object.Destroy(gameObject); }  // write on exit logic inisde {}  
+           () => { }  // write on exit logic inisde {}  
        );
 
 

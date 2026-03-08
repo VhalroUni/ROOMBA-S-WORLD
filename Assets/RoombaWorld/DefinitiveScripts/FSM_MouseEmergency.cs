@@ -10,6 +10,7 @@ public class FSM_MouseEmergency : FiniteStateMachine
      * For instance: steering behaviours, blackboard, ...*/
     private SteeringContext steeringContext;
     private MOUSE_Blackboard blackboard;
+    private GoToTarget goToTarget;
     private GameObject currentExit;
     private SpriteRenderer mouse;
     private GameObject roomba;
@@ -21,6 +22,8 @@ public class FSM_MouseEmergency : FiniteStateMachine
          * Usually this code includes .GetComponent<...> invocations */
         steeringContext = GetComponent<SteeringContext>();
         blackboard = GetComponent<MOUSE_Blackboard>();
+        goToTarget = GetComponent<GoToTarget>();
+        mouse = GetComponent<SpriteRenderer>();
         base.OnEnter(); // do not remove
     }
 
@@ -42,19 +45,30 @@ public class FSM_MouseEmergency : FiniteStateMachine
         State scared = new State("Mouse get scared",
             () => { 
                 mouse.color = Color.green;
-                steeringContext.maxSpeed = blackboard.baseMaxSpeed * 2f;
-                steeringContext.maxSpeed = blackboard.baseMaxSpeed * 4f;
-                currentExit = LocationHelper.NearestExitPoint(gameObject);
+                
+                goToTarget.target = currentExit;
             }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
             () => { mouse.color = Color.white; }  // write on exit logic inisde {}  
+        );
+
+        State die = new State("Mouse died",
+            () => { GameObject.Destroy(gameObject); }, // write on enter logic inside {}
+            () => { }, // write in state logic inside {}
+            () => {  }  // write on exit logic inisde {}  
         );
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------
         */
         Transition roombaDetect = new Transition("Roomba detect",
-            () => { return SensingUtils.DistanceToTarget(gameObject, roomba) < blackboard.roombaDetectionRadius; }, // write the condition checkeing code in {}
+            () => {return roomba = SensingUtils.FindInstanceWithinRadius(gameObject, "ROOMBA", blackboard.roombaDetectionRadius);
+            }, // write the condition checkeing code in {}
+            () => { currentExit = LocationHelper.NearestExitPoint(gameObject); }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+        );
+
+        Transition exitReached = new Transition("Location Reached",
+            () => { return SensingUtils.DistanceToTarget(gameObject, currentExit) < blackboard.exitReachedRadius; }, // write the condition checkeing code in {}
             () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
         );
 
@@ -62,9 +76,10 @@ public class FSM_MouseEmergency : FiniteStateMachine
         /* STAGE 3: add states and transitions to the FSM 
          * ----------------------------------------------
          */
-        AddStates(DEFAULT, scared);
+        AddStates(DEFAULT, scared, die);
 
         AddTransition(DEFAULT, roombaDetect, scared);
+        AddTransition(scared, exitReached, die);
 
 
         /* STAGE 4: set the initial state

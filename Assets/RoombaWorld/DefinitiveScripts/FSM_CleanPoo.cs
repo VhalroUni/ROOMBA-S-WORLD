@@ -15,6 +15,9 @@ public class FSM_CleanPoo : FiniteStateMachine
     GoToTarget goToTarget;
 
     private float timer;
+    private float distanceToFirstTarget;
+    private float distanceToOtherTarget;
+
     private GameObject targetPoo;
     private GameObject otherPoo;
 
@@ -57,10 +60,17 @@ public class FSM_CleanPoo : FiniteStateMachine
             }, // write on enter logic inside {}
             () => {
                 goToTarget.target = targetPoo;
-                float distanceToFirstTarget = SensingUtils.DistanceToTarget(gameObject, targetPoo);
+                distanceToFirstTarget = SensingUtils.DistanceToTarget(gameObject, targetPoo);
                 otherPoo = SensingUtils.FindInstanceWithinRadius(gameObject, "POO", blackboard.dustDetectionRadius);
-                float distanceToOtherTarget = SensingUtils.DistanceToTarget(gameObject, otherPoo);
-                if (distanceToFirstTarget > distanceToOtherTarget) targetPoo = otherPoo;
+                if (otherPoo == null) 
+                {
+                    distanceToOtherTarget = 1000f;
+                }
+                else
+                {
+                    distanceToOtherTarget = SensingUtils.DistanceToTarget(gameObject, otherPoo);
+                    if (distanceToFirstTarget > distanceToOtherTarget) targetPoo = otherPoo;
+                }
             }, // write in state logic inside {}
             () => { }  // write on exit logic inisde {}  
         );
