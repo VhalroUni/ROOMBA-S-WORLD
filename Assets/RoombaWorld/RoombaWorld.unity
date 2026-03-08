@@ -688,7 +688,7 @@ MonoBehaviour:
   patrolPointReachedRadius: 7
   pooCleaningTime: 2
   energyConsumptionPerSecond: 1
-  energyRechargePerSecond: 1
+  energyRechargePerSecond: 10
   minCharge: 15
   maxCharge: 99
   currentCharge: 99
